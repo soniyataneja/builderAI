@@ -3,6 +3,7 @@ import { useState } from 'react'
 import {SandpackCodeEditor, SandpackLayout, SandpackPreview, SandpackProvider, useSandpack} from '@codesandbox/sandpack-react'
 import { detectDependencies } from '../utils/sandpackUtils'
 import { useAppContext } from '../context/AppContext';
+import SandpackErrorMonitor from './SandpackErrorMonitor';
 
 // watche sfor file edits inside sandpack editor and saves changes to DB & live state
 
@@ -79,7 +80,7 @@ const handleLiveFilesChange = (newFiles)=>{
     const sandpackFiles = useMemo(()=>{
         const spFiles = {}
         for(const [path, content] of Object.entries(liveFiles)){
-            const fileCode = typeof content === "String" ?content : content?.content || ""
+            const fileCode = typeof content === "string" ?content : content?.content || ""
             spFiles[path] = {
                 code: fileCode,
                 active: path === activeFile,
@@ -132,8 +133,20 @@ const handleLiveFilesChange = (newFiles)=>{
         }} >
 
             <SandpackFileWatcher onLiveFilesChange={handleLiveFilesChange}/>
-            
+            <SandpackErrorMonitor onErrorChange={setShowErrorOverlay}/>
+            <SandpackLayout  style={{
+                height: "100%",
+                border: "none",
+                borderRadius: 0,
+                background: "transparent",
+            }}>
+                {showCode && (
+                    <SandpackCodeEditor showTabs showLineNumbers showInlineErrors wrapContent style={{ height: "100%", flex: 1, minWidth: 0 }}/>
+                    )}
 
+                    <SandpackPreview showNavigator={false} showRefreshButton  showOpenInCodeSandbox={false} showSandpackErrorOverlay={showErrorOverlay} style={{ height: "100%", flex: showCode ? 1 : 2, minWidth: 0 }}/>
+                
+            </SandpackLayout>
         </SandpackProvider>
       
     </div>

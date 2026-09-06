@@ -40,14 +40,14 @@ export function AppContextProvider({children}){
 
     useEffect(() =>{
         checkSession()
-     },[checkSession])
+     },[])
 
      const login = async (email, password)=>{
         try{
             const {data} = await api.post("/api/auth/login", {email,password})
             setUser(data.user)
             toast.success("Welcome back!")
-            navigte("/")
+            navigate("/")
         }catch(err){
             console.error("Login failed:", err)
             const errMsg = err?.response?.data?.error || "Invalid email or password"
@@ -61,7 +61,7 @@ export function AppContextProvider({children}){
             const {data} = await api.post("/api/auth/login", {name, email,password})
             setUser(data.user)
             toast.success("Account created successfully!")
-            navigte("/")
+            navigate("/")
         }catch(err){
             console.error("Registration failed:", err)
             const errMsg = err?.response?.data?.error || "Registration failed"
@@ -91,7 +91,7 @@ export function AppContextProvider({children}){
             const {data} = await api.get("/api/projects")
             setProjects(data)
         }catch(error){
-            console.error("Failed to list projects:", err)
+            console.error("Failed to list projects:", error)
             toast.error("Failed to load projects list")
         }finally{
             setLoadingProjects(false)

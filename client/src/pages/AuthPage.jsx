@@ -33,7 +33,7 @@ const AuthPage = ({mode}) => {
       }
       navigate("/")
     }catch(error){
-         setError(err.message || (mode === "login" ? "Invalid email or password" : "Registration failed"));
+         setError(error.message || (mode === "login" ? "Invalid email or password" : "Registration failed"));
     }finally{
       setLoading(false)
     }
@@ -48,12 +48,17 @@ const AuthPage = ({mode}) => {
       <div className='flex-1 flex items-center justify-center p-8'>
         <div className="w-full max-w-sm">
 
-          <div className='mb-10'>
-            <h1 className='text-3xl font-medium tracking-tight text-zinc-900 mb-1.5 font-sans">{isLogin ? "Sign in" : "Create an account'>{isLogin ? "Sign in" : "Create an account"}</h1>
-            <p className='text-sm text-zinc-400'>
-              {isLogin ? "Enter your credentials to access your website builder." : "Get started by entering your registration details."}
-            </p>
-          </div>
+          <div className="mb-10">
+  <h1 className="text-3xl font-medium tracking-tight text-zinc-900 mb-1.5 font-sans">
+    {isLogin ? "Sign in" : "Create an account"}
+  </h1>
+
+  <p className="text-sm text-zinc-400">
+    {isLogin
+      ? "Enter your credentials to access your website builder."
+      : "Get started by entering your registration details."}
+  </p>
+</div>
 
           {error && <div className='mb-6 p-3 border border-red-200 bg-red-50 text-red-700 text-xs rounded'>{error}</div>}
 

@@ -246,11 +246,14 @@ body { font-family: 'Inter', sans-serif; background-color: #09090b; color: #fafa
 api.defaults.adapter = async (config) => {
     // Simulate natural 150ms network latency
     await new Promise((resolve) => setTimeout(resolve, 150));
+  const method = (config.method || "get").toLowerCase()
+   const url = config.url || "";
 
-    const method = (config.method || "get").toLowerCase();
-    const url = config.url || "";
-    const body = config.data ? (typeof config.data === "string" ? JSON.parse(config.data) : config.data) : {};
-
+    const body = config.data
+        ? (typeof config.data === "string"
+            ? JSON.parse(config.data)
+            : config.data)
+        : {};
     const getProjects = () => {
         try {
             const saved = localStorage.getItem("mock_projects");
