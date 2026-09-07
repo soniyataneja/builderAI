@@ -32,6 +32,7 @@ const PublishModal = ({ publishUrl, onClose }) => {
                         Copy Link
                     </button>
                     <button 
+                    type='button'
                     onClick={()=> window.open(publishUrl, '_blank')}
                     className='flex-1 py-2 border border-zinc-200 text-zinc-700 text-xs font-medium hover:bg-zinc-50 cursor-pointer rounded-lg text-center'>
                         Open Site
