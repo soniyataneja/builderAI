@@ -23,7 +23,7 @@ const SandpackErrorMonitor = ({onErrorChange}) => {
         }
 
         onErrorChange(true)
-    },error, onErrorChange)
+    },[error, onErrorChange])
   return null
 }
 

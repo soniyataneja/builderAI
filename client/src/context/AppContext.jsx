@@ -58,7 +58,7 @@ export function AppContextProvider({children}){
 
       const register = async (name, email, password)=>{
         try{
-            const {data} = await api.post("/api/auth/login", {name, email,password})
+            const {data} = await api.post("/api/auth/register", {name, email,password})
             setUser(data.user)
             toast.success("Account created successfully!")
             navigate("/")
@@ -200,7 +200,7 @@ export function AppContextProvider({children}){
        const debouncedSave = React.useMemo(
         ()=>debounce(async (files,id) => {
             try {
-                await api.put(`/api/project/${id}/files`,{files})
+                await api.put(`/api/projects/${id}/files`,{files})
             } catch (err) {
                 console.error("Failes to auto-save files:",err)
                 toast.error("Failed to save code modifications")

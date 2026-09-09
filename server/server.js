@@ -10,7 +10,10 @@ const app = express()
 
 await connectToDatabase()
 
-app.use(cors({origin : process.env.ORIGINS.split(","), credentials:true}))
+app.use(cors({
+    origin:process.env.ORIGINS,
+    credentials: true
+}))
 app.use(cookieParser())
 app.use(express.json())
 

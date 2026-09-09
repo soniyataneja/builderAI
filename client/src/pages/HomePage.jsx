@@ -39,7 +39,7 @@ const HomePage = () => {
 
       {/*hero*/}
       <div className="flex-1 flex flex-col items-center justify-center px-6 pb-20 mt-8 xl:mt-28">
-        <div className="w-full max-w-2xl flex flex-col items-center"v>
+        <div className="w-full max-w-2xl flex flex-col items-center">
           {/*promo Badge */}
           <div className='flex items-center gap-2 p-1.5 pr-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-[13px] text-white/90'>
               <span className='px-3 py-1 text-[11px] bg-red-700 rounded-full font-medium tracking-wider'>PROMO</span>
@@ -90,7 +90,7 @@ const HomePage = () => {
 
                   <div className="space-y-2 max-h-[80vh] overflow-y-auto pr-1">
                     {projects.map((p)=>(
-                      <div key = {p.id} className='bg-white/5 border border-white/10 rounded-lg px-4 py-3 flex items-center justify-between group hover:border-white/20 hover:bg-white/10 cursor-pointer backdrop-blur-md transition-all'
+                      <div key = {p._id} className='bg-white/5 border border-white/10 rounded-lg px-4 py-3 flex items-center justify-between group hover:border-white/20 hover:bg-white/10 cursor-pointer backdrop-blur-md transition-all'
                       onClick={()=> navigate(`/builder/${p._id}`)}>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-white truncate">{p.name}</p>

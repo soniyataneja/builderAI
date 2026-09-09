@@ -1,29 +1,28 @@
-import React from 'react'
-import { useAppContext} from '../context/AppContext'
+import React, { useEffect, useState } from 'react'
+import { useAppContext } from '../context/AppContext'
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import Loading from '../components/Loading'
+import Loading from '../components/Loading';
 import BuilderHeader from '../components/BuilderHeader';
 import { FolderTreeIcon, MessageSquareIcon } from 'lucide-react';
-import ChatPanel from  '../components/ChatPanel'
+import ChatPanel from '../components/ChatPanel';
 import FileExplorer from '../components/FileExplorer';
 import PreviewPanel from '../components/PreviewPanel';
 import AgentProgressDashboard from '../components/AgentProgressDashboard';
 import PublishModal from '../components/PublishModal';
-import api from '../api/api'
+import api from '../api/api';
+import toast from 'react-hot-toast';
 import { exportProjectZip } from '../utils/exportProject';
-
-
 
 const BuilderPage = () => {
 
-
-  const { id } = useParams()
-  const navigate = useNavigate();
-  const [ leftTab, setLeftTab] = useState("chat");
+  const {id} = useParams()
+  const navigate = useNavigate()
+  const [leftTab, setLeftTab] = useState("chat");
   const [publishing, setPublishing] = useState(false);
   const [publishUrl, setPublishUrl] = useState(null);
-  const {activeProject, loadingActiveProject, activeFile, showCode, setActiveFile, setShowCode, loadProject, logout,chatLoading, handleChat} = useAppContext();
+
+  const {activeProject, loadingActiveProject, activeFile, showCode, setActiveFile, setShowCode, loadProject, logout, chatLoading, handleChat} = useAppContext();
+
 
 
   useEffect(()=>{
@@ -31,13 +30,14 @@ const BuilderPage = () => {
     loadProject(id)
   },[id])
 
- 
+   
+
   const handleOpenPreview = ()=>{
-    if(!id) return
+    if(!id) return;
     window.open(`/preview/${id}`, "_blank")
   }
 
-  const handlePublish = async ()=>{
+  const handlePublish = async () => {
     if(!id) return;
     setPublishing(true)
     try {
@@ -53,32 +53,31 @@ const BuilderPage = () => {
     }
   }
 
-  const handleDownload = async ()=>{
-   if(!activeProject) return;
+  const handleDownload = () => {
+    if(!activeProject) return;
     exportProjectZip(activeProject)
   }
 
-
- if(loadingActiveProject || ! activeProject){
-  return <Loading />
- }
+  if(loadingActiveProject || !activeProject){
+    return <Loading />
+  }
 
   return (
     <div className="h-screen flex flex-col bg-white overflow-hidden text-zinc-900 relative">
-      {/* top bar header */}
-      <BuilderHeader 
+      {/* Top Bar Header */}
+      <BuilderHeader
       projectName={activeProject.name}
-      verison = {activeProject.version}
+      version={activeProject.version}
       showCode={showCode}
       publishing={publishing}
       onToggleShowCode={()=> setShowCode(!showCode)}
       onOpenPreview={handleOpenPreview}
       onPublish={handlePublish}
       onDownload={handleDownload}
-      onBack={()=>navigate("/")}
-      onLogout={logout}/>
+      onBack={()=> navigate("/")}
+      onLogout={logout} />
 
-      {/*main layout */}
+      {/* Main Layout */}
       <div className="flex-1 flex overflow-hidden">
         {/* Left Sidebar */}
         <div className="w-[320px] shrink-0 flex flex-col border-r border-zinc-200 bg-white">
@@ -121,8 +120,7 @@ const BuilderPage = () => {
         </div>
       </div>
 
-      {publishUrl && <PublishModal publishUrl={publishUrl} 
-      onClose={()=> setPublishUrl(null)}/>}
+      {publishUrl && <PublishModal publishUrl={publishUrl} onClose={()=> setPublishUrl(null)}/>}
     </div>
   )
 }
