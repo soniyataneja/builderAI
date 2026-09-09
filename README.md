@@ -43,6 +43,23 @@ revisions, save their work, and publish/download the resulting project.
                          ▼
                     Project Data
 ```
+## Getting Started
+
+### Prerequisites
+
+Make sure you have:
+
+-   Node.js installed
+-   npm installed
+-   A MongoDB database
+-   An OpenRouter API key
+
+### 1. Clone the repository
+
+``` bash
+git clone <your-repository-url>
+cd builderAI
+```
 
 The application separates the frontend, backend, database,
 authentication, and AI services into clear responsibilities.
