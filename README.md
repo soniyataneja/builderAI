@@ -47,69 +47,6 @@ revisions, save their work, and publish/download the resulting project.
 The application separates the frontend, backend, database,
 authentication, and AI services into clear responsibilities.
 
-## Project Structure
-
-``` text
-builderAI/
-├── client/
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── context/
-│   │   ├── pages/
-│   │   ├── utils/
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── index.css
-│   ├── package.json
-│   └── vite.config.js
-│
-├── server/
-│   ├── config/
-│   │   └── db.js
-│   ├── controllers/
-│   │   ├── authControllers.js
-│   │   ├── chatController.js
-│   │   └── projectController.js
-│   ├── middleware/
-│   │   └── authMiddleware.js
-│   ├── models/
-│   │   ├── Project.js
-│   │   └── User.js
-│   ├── routes/
-│   │   ├── authRoutes.js
-│   │   └── projectRoutes.js
-│   ├── services/
-│   │   ├── ai.js
-│   │   ├── aiSchemas.js
-│   │   ├── codeValidator.js
-│   │   ├── contentNormalizer.js
-│   │   ├── diff.js
-│   │   └── prompts.js
-│   ├── package.json
-│   └── server.js
-│
-└── README.md
-```
-
-## Getting Started
-
-### Prerequisites
-
-Make sure you have:
-
--   Node.js installed
--   npm installed
--   A MongoDB database
--   An OpenRouter API key
-
-### 1. Clone the repository
-
-``` bash
-git clone <your-repository-url>
-cd builderAI
-```
-
 ### 2. Install frontend dependencies
 
 ``` bash
