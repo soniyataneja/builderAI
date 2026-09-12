@@ -85,45 +85,49 @@ export function AppContextProvider({children}){
      }
 
      // Projects Actions
-     const loadProjects = async ()=>{
-        if(!user) return
-        try{
-            const {data} = await api.get("/api/projects")
-            setProjects(data)
-        }catch(error){
-            console.error("Failed to list projects:", error)
-            toast.error("Failed to load projects list")
-        }finally{
-            setLoadingProjects(false)
+const loadProjects = useCallback(async () => {
+    if (!user) return;
+
+    try {
+        const { data } = await api.get("/api/projects");
+        setProjects(data);
+    } catch (error) {
+        console.error("Failed to list projects:", error);
+        toast.error("Failed to load projects list");
+    } finally {
+        setLoadingProjects(false);
+    }
+}, [user]);
+
+const loadProject = useCallback(async (id, silent = false) => {
+    if (!user) return;
+
+    if (!silent) setLoadingActiveProject(true);
+
+    try {
+        const { data } = await api.get(`/api/projects/${id}`);
+        setActiveProject(data);
+
+        const files = Object.keys(data.files);
+
+        if (files.length > 0) {
+            setActiveFile((prev) => {
+                if (files.includes(prev)) return prev;
+                if (files.includes("/App.js")) return "/App.js";
+                return files[0];
+            });
         }
-     }
+    } catch (err) {
+        console.error("Failed to load project:", err);
 
-     const loadProject = async (id,silent = false)=>{
-        if(!user) return;
-        if(!silent) setLoadingActiveProject(true)
-            try {
-                const {data} = await api.get(`/api/projects/${id}`)
-                setActiveProject(data)
-
-                //Default file selection
-                const files = Object.keys(data.files)
-                if(files.length > 0){
-                    setActiveFile((prev)=>{
-                        if(files.includes(prev)) return prev
-                        if(files.includes("/App.js")) return "/App.js"
-                        return files[0]
-                    })
-                }
-            } catch (err) {
-                console.error("Failed to load project:", err);
-                if(!silent){
-                    toast.error("Failed to load project details");
-                    navigate("/");
-                }
-            }finally{
-                if (!silent) setLoadingActiveProject(false)
-            }
-     }
+        if (!silent) {
+            toast.error("Failed to load project details");
+            navigate("/");
+        }
+    } finally {
+        if (!silent) setLoadingActiveProject(false);
+    }
+}, [user, navigate]);
 
       // Automatically poll active project status if generating or pending
             useEffect(()=>{
